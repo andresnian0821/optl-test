@@ -15,14 +15,13 @@
 package main
 
 import (
+	"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/awskinesisexporter"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/extension/httpforwarder"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/extension/observer/hostobserver"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/extension/observer/k8sobserver"
 	"go.opentelemetry.io/collector/component"
 	"go.opentelemetry.io/collector/component/componenterror"
 	"go.opentelemetry.io/collector/service/defaultcomponents"
-
-	"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/awskinesisexporter"
 )
 
 func components() (component.Factories, error) {

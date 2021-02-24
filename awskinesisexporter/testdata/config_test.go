@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package awskinesisexporter
+package testdata
 
 import (
+	"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/awskinesisexporter"
 	"path"
 	"testing"
 
@@ -30,7 +31,7 @@ func TestDefaultConfig(t *testing.T) {
 	factories, err := componenttest.ExampleComponents()
 	assert.Nil(t, err)
 
-	factory := NewFactory()
+	factory := awskinesisexporter.NewFactory()
 	factories.Exporters[factory.Type()] = factory
 	cfg, err := configtest.LoadConfigFile(
 		t, path.Join(".", "testdata", "default.yaml"), factories,
@@ -41,15 +42,15 @@ func TestDefaultConfig(t *testing.T) {
 	e := cfg.Exporters["awskinesis"]
 
 	assert.Equal(t, e,
-		&Config{
+		&awskinesisexporter.Config{
 			ExporterSettings: configmodels.ExporterSettings{
 				TypeVal: "awskinesis",
 				NameVal: "awskinesis",
 			},
-			AWS: AWSConfig{
+			AWS: awskinesisexporter.AWSConfig{
 				Region: "us-west-2",
 			},
-			KPL: KPLConfig{
+			KPL: awskinesisexporter.KPLConfig{
 				BatchSize:            5242880,
 				BatchCount:           1000,
 				BacklogCount:         2000,
@@ -70,7 +71,7 @@ func TestConfig(t *testing.T) {
 	factories, err := componenttest.ExampleComponents()
 	assert.Nil(t, err)
 
-	factory := NewFactory()
+	factory := awskinesisexporter.NewFactory()
 	factories.Exporters[factory.Type()] = factory
 	cfg, err := configtest.LoadConfigFile(
 		t, path.Join(".", "testdata", "config.yaml"), factories,
@@ -82,18 +83,18 @@ func TestConfig(t *testing.T) {
 	e := cfg.Exporters["awskinesis"]
 
 	assert.Equal(t, e,
-		&Config{
+		&awskinesisexporter.Config{
 			ExporterSettings: configmodels.ExporterSettings{
 				TypeVal: "awskinesis",
 				NameVal: "awskinesis",
 			},
-			AWS: AWSConfig{
+			AWS: awskinesisexporter.AWSConfig{
 				StreamName:      "test-stream",
 				KinesisEndpoint: "awskinesis.mars-1.aws.galactic",
 				Region:          "mars-1",
 				Role:            "arn:test-role",
 			},
-			KPL: KPLConfig{
+			KPL: awskinesisexporter.KPLConfig{
 				AggregateBatchCount:  10,
 				AggregateBatchSize:   11,
 				BatchSize:            12,
@@ -115,6 +116,6 @@ func TestConfig(t *testing.T) {
 }
 
 func TestConfigCheck(t *testing.T) {
-	cfg := (NewFactory()).CreateDefaultConfig()
+	cfg := (awskinesisexporter.NewFactory()).CreateDefaultConfig()
 	assert.NoError(t, configcheck.ValidateConfig(cfg))
 }
