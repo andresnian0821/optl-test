@@ -8,7 +8,6 @@ import (
 	"os/signal"
 	"path/filepath"
 	"syscall"
-
 	"github.com/open-telemetry/opentelemetry-lambda-extension/extension"
 
 	// "go.opentelemetry.io/collector/service/defaultcomponents"
@@ -21,7 +20,7 @@ var (
 )
 
 func main() {
-	factories, _ := Components()
+	factories, _ := components()
 	collector := NewInProcessCollector(factories)
 	collector.prepareConfig()
 	collector.start()
